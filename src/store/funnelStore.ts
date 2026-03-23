@@ -6,7 +6,7 @@ interface FunnelState {
   edges: FunnelEdge[];
   
   addNode: (node: FunnelNode) => void;
-  updateNode: (nodeId: string, data: Partial<FunnelNode>) => void;
+  updateNode: (nodeId: string, data: Partial<FunnelNode["data"]>) => void;
   deleteNode: (nodeId: string) => void;
   
   addEdge: (edge: FunnelEdge) => void;
@@ -21,31 +21,39 @@ export const useFunnelStore = create<FunnelState>((set) => ({
   edges: [],
 
   addNode: (node) =>
-  set((state) => {
-    const lastNode = state.nodes[state.nodes.length - 1];
+    set((state) => {
+      const lastNode = state.nodes[state.nodes.length - 1];
 
-    const newEdges = lastNode
-      ? [
-          ...state.edges,
-          {
-            id: `${lastNode.id}-${node.id}`,
-            source: lastNode.id,
-            target: node.id,
-            type: "default",
-          }
-        ]
-      : state.edges;
+      const newEdges = lastNode
+        ? [
+            ...state.edges,
+            {
+              id: `${lastNode.id}-${node.id}`,
+              source: lastNode.id,
+              target: node.id,
+              type: "default",
+            },
+          ]
+        : state.edges;
 
-    return {
-      nodes: [...state.nodes, node],
-      edges: newEdges,
-    };
-  }),
+      return {
+        nodes: [...state.nodes, node],
+        edges: newEdges,
+      };
+    }),
 
   updateNode: (nodeId, data) =>
     set((state) => ({
       nodes: state.nodes.map((node) =>
-        node.id === nodeId ? { ...node, ...data } : node
+        node.id === nodeId
+          ? {
+              ...node,
+              data: {
+                ...node.data,
+                ...data,
+              },
+            }
+          : node
       ),
     })),
 

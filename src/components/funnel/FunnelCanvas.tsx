@@ -9,10 +9,11 @@ import "reactflow/dist/style.css";
 
 import { useFunnelStore } from "@/store/funnelStore";
 import { FunnelNode } from "./FunnelNode";
+import type { NodeProps } from "reactflow";
 
 const nodeTypes = {
-  default: ({ data }: any) => (
-    <FunnelNode node={{ data } as any} />
+  default: (props: NodeProps) => (
+    <FunnelNode node={props as any} />
   ),
 };
 

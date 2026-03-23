@@ -6,15 +6,15 @@ export interface FunnelMetrics {
 }
 
 export function generateMetrics(sent: number): FunnelMetrics {
-  const opened = Math.floor(sent * randomBetween(0.4, 0.7));
-  const clicked = Math.floor(opened * randomBetween(0.2, 0.5));
-  const converted = Math.floor(clicked * randomBetween(0.1, 0.3));
+  const openedRaw = sent * randomBetween(0.4, 0.7);
+  const clickedRaw = openedRaw * randomBetween(0.2, 0.5);
+  const convertedRaw = clickedRaw * randomBetween(0.1, 0.3);
 
   return {
     sent,
-    opened,
-    clicked,
-    converted,
+    opened: Math.floor(openedRaw),
+    clicked: Math.floor(clickedRaw),
+    converted: Math.floor(convertedRaw),
   };
 }
 

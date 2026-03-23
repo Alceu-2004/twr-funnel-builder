@@ -21,9 +21,26 @@ export const useFunnelStore = create<FunnelState>((set) => ({
   edges: [],
 
   addNode: (node) =>
-    set((state) => ({
+  set((state) => {
+    const lastNode = state.nodes[state.nodes.length - 1];
+
+    const newEdges = lastNode
+      ? [
+          ...state.edges,
+          {
+            id: `${lastNode.id}-${node.id}`,
+            source: lastNode.id,
+            target: node.id,
+            type: "default",
+          }
+        ]
+      : state.edges;
+
+    return {
       nodes: [...state.nodes, node],
-    })),
+      edges: newEdges,
+    };
+  }),
 
   updateNode: (nodeId, data) =>
     set((state) => ({

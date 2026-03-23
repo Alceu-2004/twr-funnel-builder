@@ -28,9 +28,46 @@ export function useFunnel() {
   }
 
   function simulateMetrics() {
-    const updatedNodes = nodes.map((node) => {
-      const metrics = generateMetrics(1000);
-      return { ...node, metrics };
+    let updatedNodes = [...nodes];
+
+    const startNodes = nodes.filter(
+      (node) => node.data.type === "start"
+    );
+
+    startNodes.forEach((startNode) => {
+      let currentId = startNode.id;
+      let currentValue = 1000;
+
+      while (true) {
+        const node = updatedNodes.find((n) => n.id === currentId);
+        if (!node) break;
+
+        const metrics = generateMetrics(currentValue);
+
+        updatedNodes = updatedNodes.map((n) =>
+          n.id === currentId
+            ? {
+                ...n,
+                data: {
+                  ...n.data,
+                  metrics,
+                },
+              }
+            : n
+        );
+
+        const nextEdges = edges.filter((e) => e.source === currentId);
+
+        if (nextEdges.length === 0) break;
+
+        const nextEdge = nextEdges[0];
+        currentId = nextEdge.target;
+
+        currentValue = Math.max(
+          Math.floor(currentValue * (0.6 + Math.random() * 0.25)),
+          10
+        );
+      }
     });
 
     setNodes(updatedNodes);

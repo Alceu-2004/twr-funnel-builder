@@ -5,9 +5,16 @@ import type { NodeType } from "@/types/Funnel";
 
 export function NodeToolbar() {
   const addNode = useFunnelStore((state) => state.addNode);
+  const nodes = useFunnelStore((state) => state.nodes); 
 
   function handleAddNode(type: NodeType) {
-    const newNode = nodeFactory.createNode(type, { x: 0, y: 0 });
+    const columns = 4;
+
+    const newNode = nodeFactory.createNode(type, {
+        x: 50 + (nodes.length % columns) * 220,
+        y: 50 + Math.floor(nodes.length / columns) * 150,
+    });
+
     addNode(newNode);
   }
 

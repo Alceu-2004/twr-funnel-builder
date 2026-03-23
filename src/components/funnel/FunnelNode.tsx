@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Handle, Position } from "reactflow";
 import type { FunnelNode as FunnelNodeType } from "@/types/Funnel";
 
 interface Props {
@@ -6,18 +7,37 @@ interface Props {
 }
 
 export function FunnelNode({ node }: Props) {
-  return (
-    <Card className="w-40 shadow-md">
-      <CardContent className="p-3">
-        <h3 className="font-semibold text-sm">{node.label}</h3>
+  const isStart = node.data.type === "start";
+  const isEnd = node.data.type === "end";
 
-        <div className="text-xs mt-2 space-y-1">
-          <p>Sent: {node.metrics?.sent ?? 0}</p>
-          <p>Opened: {node.metrics?.opened ?? 0}</p>
-          <p>Clicked: {node.metrics?.clicked ?? 0}</p>
-          <p>Converted: {node.metrics?.converted ?? 0}</p>
-        </div>
-      </CardContent>
-    </Card>
+  return (
+    <div className="relative">
+      {!isStart && (
+        <Handle
+          type="target"
+          position={Position.Left}
+        />
+      )}
+
+      <Card className="w-40 shadow-md">
+        <CardContent className="p-3">
+          <h3 className="font-semibold text-sm">{node.data.label}</h3>
+
+          <div className="text-xs mt-2 space-y-1">
+            <p>Sent: {node.data.metrics?.sent ?? 0}</p>
+            <p>Opened: {node.data.metrics?.opened ?? 0}</p>
+            <p>Clicked: {node.data.metrics?.clicked ?? 0}</p>
+            <p>Converted: {node.data.metrics?.converted ?? 0}</p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {!isEnd && (
+        <Handle
+          type="source"
+          position={Position.Right}
+        />
+      )}
+    </div>
   );
 }

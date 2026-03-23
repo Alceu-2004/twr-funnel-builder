@@ -1,14 +1,17 @@
-export type NodeType = "start" | "email" | "sms" | "delay" | "condition" | "end";
+import type { Node, Edge } from "reactflow";
 
-export interface FunnelNode {
-  id: string;
-  type: NodeType;
+export type NodeType =
+  | "start"
+  | "email"
+  | "sms"
+  | "delay"
+  | "condition"
+  | "end";
+
+export interface FunnelNodeData {
   label: string;
+  type: NodeType;
   config?: Record<string, any>;
-  position: {
-    x: number;
-    y: number;
-  };
   metrics?: {
     sent?: number;
     opened?: number;
@@ -17,11 +20,9 @@ export interface FunnelNode {
   };
 }
 
-export interface FunnelEdge {
-  id: string;
-  source: string;
-  target: string;
-}
+export type FunnelNode = Node<FunnelNodeData>;
+
+export type FunnelEdge = Edge;
 
 export interface Funnel {
   id: string;

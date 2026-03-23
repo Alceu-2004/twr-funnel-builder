@@ -2,34 +2,40 @@ import { v4 as uuidv4 } from "uuid";
 import type { FunnelNode, NodeType } from "@/types/Funnel";
 
 export const nodeFactory = {
-  createNode: (type: NodeType, position: { x: number; y: number }): FunnelNode => {
+  createNode: (
+    type: NodeType,
+    position: { x: number; y: number }
+  ): FunnelNode => {
     const baseNode: FunnelNode = {
       id: uuidv4(),
-      type,
-      label: "",
+      type: "default", 
       position,
-      config: {},
-      metrics: {
-        sent: 0,
-        opened: 0,
-        clicked: 0,
-        converted: 0,
+      data: {
+        label: "",
+        type,
+        config: {},
+        metrics: {
+          sent: 0,
+          opened: 0,
+          clicked: 0,
+          converted: 0,
+        },
       },
     };
 
     switch (type) {
       case "start":
-        return { ...baseNode, label: "Start" };
+        return { ...baseNode, data: { ...baseNode.data, label: "Start" } };
       case "email":
-        return { ...baseNode, label: "Email" };
+        return { ...baseNode, data: { ...baseNode.data, label: "Email" } };
       case "sms":
-        return { ...baseNode, label: "SMS" };
+        return { ...baseNode, data: { ...baseNode.data, label: "SMS" } };
       case "delay":
-        return { ...baseNode, label: "Delay" };
+        return { ...baseNode, data: { ...baseNode.data, label: "Delay" } };
       case "condition":
-        return { ...baseNode, label: "Condition" };
+        return { ...baseNode, data: { ...baseNode.data, label: "Condition" } };
       case "end":
-        return { ...baseNode, label: "End" };
+        return { ...baseNode, data: { ...baseNode.data, label: "End" } };
       default:
         return baseNode;
     }

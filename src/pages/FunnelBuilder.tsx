@@ -14,7 +14,7 @@ export function FunnelBuilder() {
 
       <div className="flex gap-2 mb-4">
         <Button onClick={saveFunnel}>Save Funnel</Button>
-        <Button onClick={simulateMetrics}>Simulate Metrics</Button>
+        <Button onClick={simulateMetrics}>Simulate Performance</Button>
       </div>
 
       <FunnelCanvas />

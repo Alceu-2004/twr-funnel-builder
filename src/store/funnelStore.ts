@@ -58,12 +58,37 @@ export const useFunnelStore = create<FunnelState>((set) => ({
     })),
 
   deleteNode: (nodeId) =>
-    set((state) => ({
-      nodes: state.nodes.filter((node) => node.id !== nodeId),
-      edges: state.edges.filter(
-        (edge) => edge.source !== nodeId && edge.target !== nodeId
-      ),
-    })),
+    set((state) => {
+      const incomingEdges = state.edges.filter(
+        (edge) => edge.target === nodeId
+      );
+
+      const outgoingEdges = state.edges.filter(
+        (edge) => edge.source === nodeId
+      );
+
+      const reconnectEdges: FunnelEdge[] = incomingEdges.flatMap((inEdge) =>
+        outgoingEdges.map((outEdge) => ({
+          id: `${inEdge.source}-${outEdge.target}`,
+          source: inEdge.source,
+          target: outEdge.target,
+          type: "default",
+        }))
+      );
+
+      return {
+        nodes: state.nodes.filter((node) => node.id !== nodeId),
+
+        edges: [
+          ...state.edges.filter(
+            (edge) =>
+              edge.source !== nodeId && edge.target !== nodeId
+          ),
+
+          ...reconnectEdges,
+        ],
+      };
+    }),
 
   addEdge: (edge) =>
     set((state) => ({

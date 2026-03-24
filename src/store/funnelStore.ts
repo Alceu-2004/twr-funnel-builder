@@ -12,6 +12,8 @@ interface FunnelState {
   addEdge: (edge: FunnelEdge) => void;
   deleteEdge: (edgeId: string) => void;
 
+  insertNodeBetween: (edgeId: string, newNode: FunnelNode) => void;
+
   setNodes: (nodes: FunnelNode[]) => void;
   setEdges: (edges: FunnelEdge[]) => void;
 }
@@ -84,7 +86,6 @@ export const useFunnelStore = create<FunnelState>((set) => ({
             (edge) =>
               edge.source !== nodeId && edge.target !== nodeId
           ),
-
           ...reconnectEdges,
         ],
       };
@@ -99,6 +100,35 @@ export const useFunnelStore = create<FunnelState>((set) => ({
     set((state) => ({
       edges: state.edges.filter((edge) => edge.id !== edgeId),
     })),
+
+  insertNodeBetween: (edgeId, newNode) =>
+    set((state) => {
+      const edge = state.edges.find((e) => e.id === edgeId);
+      if (!edge) return state;
+
+      const { source, target } = edge;
+
+      return {
+        nodes: [...state.nodes, newNode],
+
+        edges: [
+          ...state.edges.filter((e) => e.id !== edgeId),
+
+          {
+            id: `${source}-${newNode.id}`,
+            source,
+            target: newNode.id,
+            type: "default",
+          },
+          {
+            id: `${newNode.id}-${target}`,
+            source: newNode.id,
+            target,
+            type: "default",
+          },
+        ],
+      };
+    }),
 
   setNodes: (nodes) => set({ nodes }),
   setEdges: (edges) => set({ edges }),

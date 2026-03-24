@@ -1,73 +1,119 @@
-# React + TypeScript + Vite
+# 🚀 Funnel Builder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web que permite criar e gerenciar visualmente funis de marketing por meio de uma interface interativa.
 
-Currently, two official plugins are available:
+Construída com **React Flow** e **shadcn/ui**, a aplicação possibilita criar, conectar, editar e simular etapas de um funil de forma simples e intuitiva.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🌐 Demo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Acesse a aplicação online:
 
-## Expanding the ESLint configuration
+https://twr-funnel-builder.vercel.app/
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📌 Funcionalidades
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+* ✅ Criação de etapas do funil (Start, Email, SMS, Delay, Condition, End)
+* 🔗 Conexão manual entre etapas (drag-and-drop)
+* ✏️ Edição de conexões (reconectar arrastando)
+* ➕ Inserção de novos nodes entre etapas existentes
+* ❌ Remoção de conexões
+* 📊 Simulação de métricas ao longo do funil
+* 💾 Persistência de dados no navegador (LocalStorage)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## 🎯 Objetivo
+
+O objetivo do projeto é fornecer uma interface simples e funcional para construção e visualização de funis de marketing, com foco na experiência do usuário e flexibilidade de uso.
+
+---
+
+## 🧠 Simulação de Métricas
+
+As métricas exibidas em cada etapa (envios, aberturas, cliques e conversões) são **valores simulados**.
+
+> ⚠️ Observação: Os valores foram propositalmente ajustados para serem maiores do que cenários reais.
+> Isso foi feito para facilitar a visualização do comportamento do funil,
+> já que taxas de conversão realistas tendem a resultar em valores muito próximos de zero nas etapas finais, o que dificultaria a demonstração da ferramenta.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+* React + TypeScript
+* Vite
+* React Flow
+* Zustand
+* TailwindCSS
+* shadcn/ui
+
+---
+
+## 📦 Instalação e Execução
+
+```bash
+# Clonar o repositório
+git clone https://github.com/seu-usuario/funnel-builder.git
+
+# Acessar a pasta do projeto
+cd funnel-builder
+
+# Instalar dependências
+npm install
+
+# Rodar o projeto
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🧩 Como Utilizar
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+* Utilize a barra de ferramentas para adicionar novas etapas
+* Arraste de um node para outro para criar conexões
+* Clique em uma conexão para:
+
+  * Inserir um novo node entre as etapas
+  * Remover a conexão
+* Arraste conexões existentes para alterar o fluxo
+* Utilize a simulação de métricas para visualizar o desempenho do funil
+
+---
+
+## 📁 Estrutura do Projeto
+
 ```
+src/
+ ├── components/
+ ├── store/
+ ├── hooks/
+ ├── factory/
+ ├── services/
+ ├── types/
+ └── utils/
+```
+
+---
+
+## 🚀 Possíveis Melhorias Futuras
+
+* Substituir prompts por interface visual (popover/modal)
+* Suporte a bifurcações condicionais (fluxos YES/NO)
+* Melhor posicionamento automático dos nodes
+* Integração com backend para persistência real de dados
+
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT.
+
+---
+
+## 👨‍💻 Autor
+
+Desenvolvido por Alceu Botelho
